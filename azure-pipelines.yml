@@ -9,13 +9,17 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '3.1'
+
 - task: DotNetCoreCLI@2
   name: restore
   inputs:
     command: 'restore'
     projects: '**/*.csproj'
     feedsToUse: 'select'
-
 
 - task: DotNetCoreCLI@2
   name: tests
