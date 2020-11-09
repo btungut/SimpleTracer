@@ -53,7 +53,7 @@ jobs:
     
     - task: DotNetCoreCLI@2
       displayName: 'Run Acceptance Tests'
-      condition: contains(variables['build.sourceBranch'], 'refs/heads/release')
+      condition: or(contains(variables['build.sourceBranch'], 'refs/heads/master'), contains(variables['build.sourceBranch'], 'refs/heads/release'))
       inputs:
         command: 'test'
         projects: 'tests/SimpleTracer.AcceptanceTests/SimpleTracer.AcceptanceTests.csproj'
