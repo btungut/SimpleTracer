@@ -1,0 +1,106 @@
+pr:
+  branches:
+    include:
+    - master
+    - releases/*
+  paths:
+    exclude:
+      - '*.md'
+      - 'azure-pipelines.yml'
+trigger:
+  branches:
+    include:
+    - master
+    - release/*
+  paths:
+    exclude:
+      - '*.md'
+      - 'azure-pipelines.yml'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+      BuildConfiguration: 'Release'
+      TestConfiguration: 'Debug'
+      NugetFeed: 'https://api.nuget.org/v3/index.json'
+      
+jobs:
+  - job:
+
+    steps:
+    - task: UseDotNet@2
+      inputs:
+        packageType: 'sdk'
+        version: '3.1.x'
+    
+    - task: DotNetCoreCLI@2
+      displayName: 'Build Project'
+      inputs:
+        command: 'build'
+        projects: 'src/SimpleTracer/SimpleTracer.csproj'
+        packagesToPush: 'src/SimpleTracer/SimpleTracer.csproj'
+        arguments: '--configuration $(BuildConfiguration) -p:CreatePackage=true'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Run Unit Tests'
+      inputs:
+        command: 'test'
+        projects: 'tests/SimpleTracer.UnitTests/SimpleTracer.UnitTests.csproj'
+        arguments: '--configuration $(TestConfiguration) --collect:"XPlat Code Coverage"'
+        testRunTitle: 'Unit Tests'
+        publishTestResults: true
+    
+    - task: DotNetCoreCLI@2
+      displayName: 'Run Acceptance Tests'
+      condition: contains(variables['build.sourceBranch'], 'refs/heads/release')
+      inputs:
+        command: 'test'
+        projects: 'tests/SimpleTracer.AcceptanceTests/SimpleTracer.AcceptanceTests.csproj'
+        testRunTitle: 'Acceptance Tests'
+        publishTestResults: true
+
+    - task: reportgenerator@4
+      displayName: 'Generate Code Coverage Report'
+      inputs:
+        reports: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
+        targetdir: '$(Common.TestResultsDirectory)/coverlet'
+        reporttypes: 'HtmlInline_AzurePipelines;Cobertura;Badges'
+        assemblyfilters: '-xunit*'
+
+    - task: PublishCodeCoverageResults@1
+      displayName: 'Publish Code Coverage Report'
+      inputs:
+        codeCoverageTool: 'Cobertura'
+        summaryFileLocation: '$(Common.TestResultsDirectory)/coverlet/*.xml'
+      
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'XUnit'
+        testResultsFiles: '**/*.trx'
+        searchFolder: '$(Agent.TempDirectory)'
+    
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'pack'
+        packagesToPack: 'src/SimpleTracer/SimpleTracer.csproj'
+        packDirectory: '$(Build.ArtifactStagingDirectory)/nuget'
+        nobuild: true
+        includesymbols: true
+        includesource: true
+        versioningScheme: 'off'
+        verbosityPack: 'Minimal'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish to Artifacts'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/nuget'
+        ArtifactName: 'nuget'
+        publishLocation: 'Container'
+        
+    # - script: dotnet nuget push $(Build.ArtifactStagingDirectory)/nuget/*.nupkg --skip-duplicate --api-key $(NugetApiKey) --source $(NugetFeed)
+    #   displayName: 'Push Package to nuget.org'
+    #   condition: and(succeeded(), contains(variables['build.sourceBranch'], 'refs/heads/release'))
+    # - script: dotnet nuget push $(Build.ArtifactStagingDirectory)/nuget/*.snupkg --skip-duplicate --api-key $(NugetApiKey) --source $(NugetFeed)
+    #   displayName: 'Push Symbols to nuget.org'
+    #   condition: and(succeeded(), contains(variables['build.sourceBranch'], 'refs/heads/release'))
