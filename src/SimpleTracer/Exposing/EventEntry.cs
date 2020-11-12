@@ -14,7 +14,9 @@ namespace SimpleTracer
             Id = id;
             Name = name;
             Registration = registration;
+#if !NETSTANDARD2_0
             CreatedOn = createdOn;
+#endif
             ListenedOn = listenedOn;
             PopulateProperties(payloadNames, payloads);
         }
@@ -24,7 +26,9 @@ namespace SimpleTracer
             Id = args.EventId;
             Name = args.EventName;
             Registration = registration;
+#if !NETSTANDARD2_0
             CreatedOn = args.TimeStamp;
+#endif
             ListenedOn = listenedOn;
             PopulateProperties(args.PayloadNames, args.Payload);
             Keywords = args.Keywords;
@@ -51,7 +55,9 @@ namespace SimpleTracer
 
         public int Id { get; private set; }
         public string Name { get; private set; }
+#if !NETSTANDARD2_0
         public DateTime CreatedOn { get; private set; }
+#endif
         public DateTime ListenedOn { get; private set; }
         public IReadOnlyDictionary<string, object> Properties { get; private set; }
         public Registration Registration { get; private set; }

@@ -43,16 +43,16 @@ namespace SimpleTracer
         /// The object that describes the filters to get this event listened.
         /// </summary>
         Registration Registration { get; }
-
+#if !NETSTANDARD2_0
         /// <summary>
         /// Indicates the creation time (in UTC) of event.<br></br>
         /// Equivalent of <see cref="System.Diagnostics.Tracing.EventWrittenEventArgs.TimeStamp"/>
         /// </summary>
         DateTime CreatedOn { get; }
+#endif
 
         /// <summary>
         /// Indicates the listened time (in UTC) of event by internal listener.<br></br>
-        /// Subtraction this from <see cref="CreatedOn"/> shows the delay and load of internal listener.
         /// </summary>
         DateTime ListenedOn { get; }
 
