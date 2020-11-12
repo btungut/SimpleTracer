@@ -9,7 +9,7 @@ Simplest way to listen and collect events for .Net/.Net Core applications.!
 
 |Build|Test|Coverage|Nuget|
 |--|--|--|--|
-|[![Build Status](https://dev.azure.com/buraktungut/SimpleTracer/_apis/build/status/btungut.SimpleTracer?branchName=main)](https://dev.azure.com/buraktungut/SimpleTracer/_build/latest?definitionId=1)|[![Azure DevOps tests](https://img.shields.io/azure-devops/tests/buraktungut/simpletracer/1)](https://dev.azure.com/buraktungut/SimpleTracer/_build/latest?definitionId=1)|[![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/buraktungut/simpletracer/1)](https://dev.azure.com/buraktungut/SimpleTracer/_build/latest?definitionId=1)|[![Nuget](https://img.shields.io/nuget/v/SimpleTracer)](https://www.nuget.org/packages/SimpleTracer/)
+|[![Build Status](https://dev.azure.com/buraktungut/SimpleTracer/_apis/build/status/btungut.SimpleTracer?branchName=master)](https://dev.azure.com/buraktungut/SimpleTracer/_build/latest?definitionId=2)|[![Azure DevOps tests](https://img.shields.io/azure-devops/tests/buraktungut/simpletracer/2)](https://dev.azure.com/buraktungut/SimpleTracer/_build/latest?definitionId=2)|[![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/buraktungut/simpletracer/2)](https://dev.azure.com/buraktungut/SimpleTracer/_build/latest?definitionId=2)|[![Nuget](https://img.shields.io/nuget/v/SimpleTracer)](https://www.nuget.org/packages/SimpleTracer/)
 
 
 
