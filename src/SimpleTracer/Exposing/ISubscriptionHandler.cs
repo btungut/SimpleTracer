@@ -25,6 +25,6 @@ namespace SimpleTracer
 
     internal interface IInternalSubscriptionHandler : ISubscriptionHandler
     {
-        public void Add(IEventEntry entry);
+        void Add(IEventEntry entry);
     }
 }

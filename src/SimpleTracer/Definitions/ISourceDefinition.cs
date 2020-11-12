@@ -16,22 +16,22 @@ namespace SimpleTracer
         /// The filter that is used to <b>match exactly</b> against <see cref="System.Diagnostics.Tracing.EventWrittenEventArgs.EventId"/>
         /// <br></br>If it is null, all of the events that matches with other filters will be listened.
         /// </summary>
-        public int? EventId { get; }
+        int? EventId { get; }
 
         /// <summary>
         /// The filter that is used to <b>match exactly</b> against <see cref="System.Diagnostics.Tracing.EventWrittenEventArgs.EventSource"/>
         /// </summary>
-        public string EventSource { get; }
+        string EventSource { get; }
 
         /// <summary>
         /// The filter that is used to <b>compare</b> against <see cref="System.Diagnostics.Tracing.EventWrittenEventArgs.Level"/>
         /// </summary>
-        public EventLevel MinimumEventLevel { get; }
+        EventLevel MinimumEventLevel { get; }
 
         /// <summary>
         /// The filter that is used to <b>match with combined values</b> against <see cref="System.Diagnostics.Tracing.EventWrittenEventArgs.Keywords"/>
         /// <br></br>By using bitwise operators, multiple <see cref="System.Diagnostics.Tracing.EventKeywords"/> could be combined.
         /// </summary>
-        public EventKeywords EventKeywords { get; }
+        EventKeywords EventKeywords { get; }
     }
 }
