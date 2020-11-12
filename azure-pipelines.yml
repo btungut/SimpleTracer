@@ -2,6 +2,7 @@ pr:
   branches:
     include:
     - master
+    - feature/*
     - releases/*
   paths:
     exclude:
@@ -11,6 +12,7 @@ trigger:
   branches:
     include:
     - master
+    - feature/*
     - release/*
   paths:
     exclude:
