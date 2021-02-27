@@ -25,8 +25,9 @@ namespace SimpleTracer.Internal
 
             _initiated = true;
 
-            while (_createdEventSources.TryDequeue(out EventSource eventSource))
-                EnableEventsIfRegistered(eventSource);
+            if(_createdEventSources != null)
+                while (_createdEventSources.TryDequeue(out EventSource eventSource))
+                    EnableEventsIfRegistered(eventSource);
 
             Instances[Guid.NewGuid()] = this;
         }
