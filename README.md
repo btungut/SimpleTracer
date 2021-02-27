@@ -35,6 +35,7 @@ var builder = SubscriptionContainerBuilder
     .New()
     .WithSubscription(s => s
         .WithEvents(e => e.DotNetRuntime.GC.AllInformationals())
+        .WithOptions()
         .WithExecution(e => e
             .WithInterval(TimeSpan.FromSeconds(30))
             .WithDelegate(OnEventsCollected)
