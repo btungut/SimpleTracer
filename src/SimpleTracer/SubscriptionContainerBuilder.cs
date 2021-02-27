@@ -64,10 +64,10 @@ namespace SimpleTracer
                 }
             }
 
-            new CentralEventListener(new EventListenerParameters(handlersAsInternal));
-            ISubscriptionContainer container = new SubscriptionContainer(handlers);
+            if(handlersAsInternal.Count > 0)
+                new CentralEventListener(new EventListenerParameters(handlersAsInternal));
 
-            return container;
+            return new SubscriptionContainer(handlers);
         }
     }
 }
